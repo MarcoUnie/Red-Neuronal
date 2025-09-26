@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>MLP desde cero con Flask</title>
+    <style>
+        body { font-family: Arial, sans-serif; padding: 30px; }
+        .card { padding: 20px; border-radius: 8px; box-shadow: 0 2px 6px rgba(0,0,0,0.2); }
+        input { padding: 8px; margin: 5px; width: 300px; }
+        button { padding: 8px 15px; background: #007BFF; color: white; border: none; border-radius: 5px; }
+        .resultado { margin-top: 20px; font-weight: bold; }
+    </style>
+</head>
+<body>
+    <div class="card">
+        <h2>Red Neuronal MLP (desde cero con NumPy)</h2>
+        <form method="POST">
+            <label>Entradas (separadas por comas):</label><br>
+            <input type="text" name="entradas" placeholder="0.1,0.2,0.3" required>
+            <br>
+            <button type="submit">Predecir</button>
+        </form>
+
+        {% if prediccion %}
+            <div class="resultado">
+                Predicción: {{ prediccion }}
+            </div>
+        {% endif %}
+    </div>
+</body>
+</html>
