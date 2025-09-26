@@ -18,3 +18,4 @@ class Capa:
         for muestra in entradas:
             salidas.append([neurona.forward(muestra) for neurona in self.neuronas])
         return np.array(salidas)
+
