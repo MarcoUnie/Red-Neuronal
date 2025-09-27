@@ -2,30 +2,35 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>MLP desde cero con Flask</title>
+    <title>Mini-Lenguaje de Redes Neuronales</title>
     <style>
         body { font-family: Arial, sans-serif; padding: 30px; }
         .card { padding: 20px; border-radius: 8px; box-shadow: 0 2px 6px rgba(0,0,0,0.2); }
-        input { padding: 8px; margin: 5px; width: 300px; }
-        button { padding: 8px 15px; background: #007BFF; color: white; border: none; border-radius: 5px; }
-        .resultado { margin-top: 20px; font-weight: bold; }
+        textarea { width: 100%; height: 80px; margin-top: 10px; }
+        button { padding: 10px 20px; margin-top: 10px; background: #007BFF; color: white; border: none; border-radius: 5px; }
+        pre { background: #f4f4f4; padding: 15px; border-radius: 5px; }
+        .error { color: red; font-weight: bold; }
     </style>
 </head>
 <body>
     <div class="card">
-        <h2>Red Neuronal MLP (desde cero con NumPy)</h2>
+        <h2>Define tu arquitectura de red</h2>
         <form method="POST">
-            <label>Entradas (separadas por comas):</label><br>
-            <input type="text" name="entradas" placeholder="0.1,0.2,0.3" required>
+            <label>Arquitectura:</label><br>
+            <textarea name="arquitectura" placeholder="Dense(256, relu) -> Dense(128, relu) -> Dense(10, softmax)" required></textarea>
             <br>
-            <button type="submit">Predecir</button>
+            <button type="submit">Compilar Modelo</button>
         </form>
 
-        {% if prediccion %}
-            <div class="resultado">
-                Predicción: {{ prediccion }}
-            </div>
+        {% if error %}
+            <div class="error">Error: {{ error }}</div>
+        {% endif %}
+
+        {% if modelo_resumen %}
+            <h3>Resumen del Modelo:</h3>
+            <pre>{{ modelo_resumen }}</pre>
         {% endif %}
     </div>
 </body>
 </html>
+
