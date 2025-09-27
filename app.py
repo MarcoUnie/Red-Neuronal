@@ -27,7 +27,7 @@ def index():
             except Exception as e:
                 prediccion = f"Error: {str(e)}"
 
-    return render_template("index.html", prediccion=prediccion)
+    return render_template("web.html", prediccion=prediccion)
 
 @app.route("/api/predict", methods=["POST"])
 def api_predict():
