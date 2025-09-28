@@ -32,3 +32,7 @@ if __name__ == "__main__":
 #Respuesta al analisis 1:Al tener 10 millones de parámetros la expresiones se volverían largas y propensas a
 #errores, además se necesitaría un codigo muy bien optimizado para no quedarse sin memoria. Por lo tanto 
 #realmente el desafío se encuentra en hacerlo eficiente y estable.
+
+#Respuesta al analisis 2:Este nivel de abstracción es mucho más claro que construirlo capa por capa, además permite
+#que personas sin mucho conocimiento en la programación sean capaces de crear modelos con facilida, y por último
+#se podría compilar también en otras librerías como pytorch o keras.
