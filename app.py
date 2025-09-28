@@ -3,8 +3,11 @@ from flask import Flask, request, render_template, send_file
 from werkzeug.utils import secure_filename
 import numpy as np
 import tensorflow as tf
+from PIL import Image
+import io, base64
 import plotly.graph_objects as go
 from historial import agregar_entrada, obtener_historial
+from tensorflow.keras.datasets import mnist
 
 app = Flask(__name__)
 UPLOAD_FOLDER = "uploads"
@@ -45,7 +48,6 @@ def index():
             agregar_entrada("texto", texto, resultado, filename)
 
             archivo_descarga = filename
-
         elif "imagen" in request.files:
             imagen = request.files["imagen"]
             if imagen.filename != "":
@@ -53,7 +55,6 @@ def index():
                 filepath = os.path.join(app.config["UPLOAD_FOLDER"], filename)
                 imagen.save(filepath)
 
-                # Preprocesar imagen para MNIST
                 img = tf.keras.preprocessing.image.load_img(filepath, color_mode="grayscale", target_size=(28,28))
                 img_array = tf.keras.preprocessing.image.img_to_array(img).reshape(1, 784) / 255.0
 
@@ -66,7 +67,23 @@ def index():
                 with open(result_path, "w", encoding="utf-8") as f:
                     f.write(resultado)
 
-                grafico = generar_grafico(pred)
+                (x_train, y_train), (x_test, y_test) = mnist.load_data()
+                indices = np.where(y_test == digito)[0]
+                if len(indices) == 0: 
+                    indices = np.where(y_train == digito)[0]
+                    source = x_train
+                else:
+                    source = x_test
+
+                idx = np.random.choice(indices)
+                match_img = source[idx]
+
+                pil_img = Image.fromarray(match_img.astype(np.uint8), mode='L')
+                buffer = io.BytesIO()
+                pil_img.save(buffer, format="PNG")
+                b64 = base64.b64encode(buffer.getvalue()).decode("utf-8")
+
+                grafico = f'<img src="data:image/png;base64,{b64}" alt="MNIST {digito}" />'
 
                 agregar_entrada("imagen", filename, resultado, result_file, grafico)
 

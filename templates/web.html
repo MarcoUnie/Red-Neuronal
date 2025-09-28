@@ -5,15 +5,7 @@
   <title>MNIST + Plotly</title>
 </head>
 <body>
-  <h2>Analizar Texto o Imagen</h2>
-
-  <form method="POST">
-    <textarea name="texto" placeholder="Escribe aquí un texto"></textarea><br>
-    <button type="submit">Enviar Texto</button>
-  </form>
-
-  <hr>
-
+    <label for="imagen">Sube una imagen donde haya un número del 1 al 20</label>
   <form method="POST" enctype="multipart/form-data">
     <input type="file" name="imagen" accept="image/*"><br>
     <button type="submit">Enviar Imagen</button>
