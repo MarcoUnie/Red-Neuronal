@@ -14,14 +14,8 @@ os.makedirs(RESULTS_FOLDER, exist_ok=True)
 app.config["UPLOAD_FOLDER"] = UPLOAD_FOLDER
 app.config["RESULTS_FOLDER"] = RESULTS_FOLDER
 
-# ======================
-# Cargar modelo ya entrenado
-# ======================
 modelo = tf.keras.models.load_model("model.h5")
 
-# ======================
-# Función para generar gráfico Plotly
-# ======================
 def generar_grafico(predicciones):
     fig = go.Figure(data=[
         go.Bar(x=list(range(10)), y=predicciones[0])
@@ -33,9 +27,6 @@ def generar_grafico(predicciones):
     )
     return fig.to_html(full_html=False)
 
-# ======================
-# Rutas Flask
-# ======================
 @app.route("/", methods=["GET", "POST"])
 def index():
     resultado = None
@@ -46,8 +37,6 @@ def index():
         if "texto" in request.form and request.form["texto"].strip() != "":
             texto = request.form["texto"]
             resultado = f"Texto recibido con {len(texto.split())} palabras."
-
-            # Guardar resultado
             filename = "resultado_texto.txt"
             filepath = os.path.join(app.config["RESULTS_FOLDER"], filename)
             with open(filepath, "w", encoding="utf-8") as f:
@@ -72,20 +61,18 @@ def index():
                 digito = np.argmax(pred)
                 resultado = f"Modelo reconoce el dígito como: {digito}"
 
-                # Guardar resultado en archivo
                 result_file = f"resultado_{filename}.txt"
                 result_path = os.path.join(app.config["RESULTS_FOLDER"], result_file)
                 with open(result_path, "w", encoding="utf-8") as f:
                     f.write(resultado)
 
-                # Crear gráfico Plotly
                 grafico = generar_grafico(pred)
 
                 agregar_entrada("imagen", filename, resultado, result_file, grafico)
 
                 archivo_descarga = result_file
 
-    return render_template("index.html", resultado=resultado, archivo_descarga=archivo_descarga, grafico=grafico)
+    return render_template("web.html", resultado=resultado, archivo_descarga=archivo_descarga, grafico=grafico)
 
 @app.route("/descargar/<filename>")
 def descargar(filename):

@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Historial de Usos</title>
+</head>
+<body>
+  <h2>Historial de entradas</h2>
+  <ul>
+    {% for entrada in historial %}
+      <li>
+        <strong>{{ entrada.tipo }}</strong>: {{ entrada.entrada }} → {{ entrada.resultado }}
+        {% if entrada.archivo %}
+          <a href="{{ url_for('descargar', filename=entrada.archivo) }}">📥 Descargar</a>
+        {% endif %}
+        {% if entrada.grafico %}
+          <div>{{ entrada.grafico | safe }}</div>
+        {% endif %}
+      </li>
+    {% endfor %}
+  </ul>
+  <a href="{{ url_for('index') }}">Volver</a>
+</body>
+</html>

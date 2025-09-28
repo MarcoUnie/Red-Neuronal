@@ -1,36 +1,40 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <title>Mini-Lenguaje de Redes Neuronales</title>
-    <style>
-        body { font-family: Arial, sans-serif; padding: 30px; }
-        .card { padding: 20px; border-radius: 8px; box-shadow: 0 2px 6px rgba(0,0,0,0.2); }
-        textarea { width: 100%; height: 80px; margin-top: 10px; }
-        button { padding: 10px 20px; margin-top: 10px; background: #007BFF; color: white; border: none; border-radius: 5px; }
-        pre { background: #f4f4f4; padding: 15px; border-radius: 5px; }
-        .error { color: red; font-weight: bold; }
-    </style>
+  <meta charset="UTF-8">
+  <title>MNIST + Plotly</title>
 </head>
 <body>
-    <div class="card">
-        <h2>Define tu arquitectura de red</h2>
-        <form method="POST">
-            <label>Arquitectura:</label><br>
-            <textarea name="arquitectura" placeholder="Dense(256, relu) -> Dense(128, relu) -> Dense(10, softmax)" required></textarea>
-            <br>
-            <button type="submit">Compilar Modelo</button>
-        </form>
+  <h2>Analizar Texto o Imagen</h2>
 
-        {% if error %}
-            <div class="error">Error: {{ error }}</div>
-        {% endif %}
+  <form method="POST">
+    <textarea name="texto" placeholder="Escribe aquí un texto"></textarea><br>
+    <button type="submit">Enviar Texto</button>
+  </form>
 
-        {% if modelo_resumen %}
-            <h3>Resumen del Modelo:</h3>
-            <pre>{{ modelo_resumen }}</pre>
-        {% endif %}
-    </div>
+  <hr>
+
+  <form method="POST" enctype="multipart/form-data">
+    <input type="file" name="imagen" accept="image/*"><br>
+    <button type="submit">Enviar Imagen</button>
+  </form>
+
+  <hr>
+
+  {% if resultado %}
+    <h3>Resultado:</h3>
+    <p>{{ resultado }}</p>
+    {% if archivo_descarga %}
+      <a href="{{ url_for('descargar', filename=archivo_descarga) }}">📥 Descargar resultado</a>
+    {% endif %}
+    {% if grafico %}
+      <h3>Gráfico:</h3>
+      {{ grafico | safe }}
+    {% endif %}
+  {% endif %}
+
+  <hr>
+  <a href="{{ url_for('ver_historial') }}">Ver Historial</a>
 </body>
 </html>
 
