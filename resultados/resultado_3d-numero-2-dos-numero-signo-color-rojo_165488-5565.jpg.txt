@@ -1,1 +1,0 @@
-Modelo reconoce el dígito como: 3

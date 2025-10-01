@@ -3,22 +3,112 @@
 <head>
   <meta charset="UTF-8">
   <title>Historial de Usos</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: #f4f6f9;
+      margin: 0;
+      padding: 20px;
+      color: #333;
+    }
+
+    .container {
+      max-width: 900px;
+      margin: auto;
+      background: #fff;
+      padding: 25px;
+      border-radius: 12px;
+      box-shadow: 0 6px 15px rgba(0,0,0,0.1);
+    }
+
+    h2 {
+      text-align: center;
+      color: #2c3e50;
+      margin-bottom: 25px;
+    }
+
+    ul {
+      list-style: none;
+      padding: 0;
+    }
+
+    li {
+      background: #f9f9f9;
+      margin-bottom: 15px;
+      padding: 15px;
+      border-radius: 10px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+      transition: transform 0.2s ease;
+    }
+
+    li:hover {
+      transform: scale(1.01);
+      background: #f0f8ff;
+    }
+
+    strong {
+      color: #3498db;
+      font-size: 1.1em;
+    }
+
+    a.descargar {
+      display: inline-block;
+      margin-top: 8px;
+      background: #2ecc71;
+      color: white;
+      text-decoration: none;
+      padding: 8px 12px;
+      border-radius: 6px;
+      font-size: 0.9em;
+      transition: background 0.3s ease;
+    }
+
+    a.descargar:hover {
+      background: #27ae60;
+    }
+
+    .grafico {
+      margin-top: 10px;
+      text-align: center;
+    }
+
+    .volver {
+      display: block;
+      text-align: center;
+      margin-top: 25px;
+      background: #3498db;
+      color: #fff;
+      text-decoration: none;
+      padding: 12px 18px;
+      border-radius: 8px;
+      font-weight: bold;
+      transition: background 0.3s ease;
+    }
+
+    .volver:hover {
+      background: #2980b9;
+    }
+  </style>
 </head>
 <body>
-  <h2>Historial de entradas</h2>
-  <ul>
-    {% for entrada in historial %}
-      <li>
-        <strong>{{ entrada.tipo }}</strong>: {{ entrada.entrada }} → {{ entrada.resultado }}
-        {% if entrada.archivo %}
-          <a href="{{ url_for('descargar', filename=entrada.archivo) }}">📥 Descargar</a>
-        {% endif %}
-        {% if entrada.grafico %}
-          <div>{{ entrada.grafico | safe }}</div>
-        {% endif %}
-      </li>
-    {% endfor %}
-  </ul>
-  <a href="{{ url_for('index') }}">Volver</a>
+  <div class="container">
+    <h2>📜 Historial de entradas</h2>
+    <ul>
+      {% for entrada in historial %}
+        <li>
+          <strong>{{ entrada.tipo }}</strong><br>
+          <span>🔹 Entrada: <em>{{ entrada.entrada }}</em></span><br>
+          <span>✅ Resultado: <em>{{ entrada.resultado }}</em></span><br>
+          {% if entrada.archivo %}
+            <a href="{{ url_for('descargar', filename=entrada.archivo) }}" class="descargar">📥 Descargar</a>
+          {% endif %}
+          {% if entrada.grafico %}
+            <div class="grafico">{{ entrada.grafico | safe }}</div>
+          {% endif %}
+        </li>
+      {% endfor %}
+    </ul>
+    <a href="{{ url_for('index') }}" class="volver">⬅️ Volver al inicio</a>
+  </div>
 </body>
 </html>

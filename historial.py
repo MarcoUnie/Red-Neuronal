@@ -1,12 +1,11 @@
 historial = []
 
-def agregar_entrada(tipo, entrada, resultado, archivo=None, grafico=None):
+def agregar_entrada(tipo, entrada, resultado, archivo=None):
     historial.append({
-        "tipo": tipo,         # "texto" o "imagen"
-        "entrada": entrada,   # cadena o nombre de archivo
+        "tipo": tipo,         
+        "entrada": entrada,   
         "resultado": resultado,
-        "archivo": archivo,   # ruta al archivo .txt de descarga
-        "grafico": grafico    # gráfico Plotly como HTML
+        "archivo": archivo,  
     })
 
 def obtener_historial():
